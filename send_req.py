@@ -52,7 +52,7 @@ def finally_json(file_path):
             }
             if contract_file_link.startswith("https://billing.e-edu.uz"):
                 array.append(new_obj)
-    file_name = "finally1_new3.json"
+    file_name = "finally1_new5.json"
     with open(file_name, 'w', encoding='utf-8') as file:
         json.dump(array, file, ensure_ascii=False, indent=4)
     return file_name
@@ -84,7 +84,7 @@ login()
 code = int(input("input your code: "))
 token = verify(code)
 ic(token)
-file_name = finally_json("AIFU_06_08 (4).json_result.json")
+file_name = finally_json("AIFU_08_08_oxirgisi.json_result.json")
 ic(file_name)
 # data = send_file(token, file_name)
 # ic(data)

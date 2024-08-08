@@ -20,8 +20,8 @@ token = signIn()
 
 # ic(contract_template_id)
 
-excel_file_path = 'AIFU_FILTERED_08_02.xlsx'
-json_file_path = 'AIFU_FILTERED_08_02.json'
+excel_file_path = 'AIFU_08_08_oxirgisi.xlsx'
+json_file_path = 'AIFU_08_08_oxirgisi.json'
 
 # with open("1720268429761.json_result_copy.json", 'r', encoding='utf-8') as json_file:
 #     data_copy = json.load(json_file)
