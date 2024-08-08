@@ -40,12 +40,14 @@ class University:
         if data is not None:
             for degree in data:
                 code = degree['code']
-                name = degree['name']
-                if name == name:
+                name_ = degree['name']
+                ic(code, name_, name, 2222)
+                if name_ == name:
                     obj = {
                         'code': code,
-                        'name': name
+                        'name': name_
                     }
+                    ic(obj)
                     return obj
                 # self.degrees.append(obj)
             # return self.degrees
@@ -57,11 +59,13 @@ class University:
         if data is not None:
             for eduType in data:
                 code = eduType['code']
-                name = eduType['name']
-                if name == name:
+                name_ = eduType['name']
+                ic(code, name_, name, 1111)
+                if name_ == name:
+                    
                     obj = {
                         'code': code,
-                        'name': name
+                        'name': name_
                     }
                     return obj
             #     self.eduTypes.append(obj)
@@ -87,7 +91,10 @@ class University:
             return None
     
     def return_by_university_and_edu_type(self, eduTypeId, degreeId, IspecialityCode, IeduTypeName, IdegreeName):
+        ic(eduTypeId, degreeId, 949494)
         data = ByUniversityAndEduType(self.token, eduTypeId, degreeId, 11)
+        ic(eduTypeId, degreeId, IspecialityCode, IeduTypeName, IdegreeName)
+        ic(data, 'bu data')
         if data is not None:
             for obj in data:
                 checkingAccountId = obj['checkingAccountId']
@@ -98,14 +105,17 @@ class University:
                 specialityName = obj['specialityName']
                 # ic(specialityName)
                 specialityCode = obj['specialityCode']
-                # ic(specialityCode)
+                # ic(specialityCode, )
                 eduTypeName = obj['eduTypeName']
                 # ic(eduTypeName)
                 degreeName = obj['degreeName']
-                # ic(degreeName)
+                ic('  ')
+                ic(degreeName, IdegreeName, specialityCode, IspecialityCode, eduTypeName, IeduTypeName)
                 contractPrice = int(obj['contractPrice'])
                 # ic(contractPrice)
-                if specialityCode == IspecialityCode and eduTypeName == IeduTypeName and degreeName == IdegreeName:
+                if int(specialityCode) == int(IspecialityCode) and \
+                    str(eduTypeName).lower() == str(IdegreeName).lower() and \
+                        str(degreeName).lower() == str(IeduTypeName).lower():
                     new_obj = {
                         'checkingAccountId': checkingAccountId,
                         'contractPriceId': contractPriceId,
@@ -205,44 +215,40 @@ class University:
 #         ic(err)
 
 def return_contract_id_directions(edu_type_name, degree_name, direction_code):
-    """
-    Retrieves and constructs a contract ID data object based on educational type, degree, and direction code.
-
-    Args:
-    edu_type_name (str): The name of the education type.
-    degree_name (str): The name of the degree.
-    direction_code (str): The code for the direction.
-
-    Returns:
-    dict: A dictionary containing various contract details.
-    """
     # try:
     university = University(token)  # Assuming `token` is defined elsewhere
     # Logging the input parameters
     ic(edu_type_name, degree_name, direction_code, 'directionsga keldi 24')  
 
     # Retrieve degree and educational type data
-    res_degree = university.return_degrees(degree_name)
-    res_edu_type = university.return_edu_types(edu_type_name)
-    
+    res_degree = university.return_degrees(edu_type_name)
+    res_edu_type = university.return_edu_types(degree_name)
+    ic(res_degree, res_edu_type, '******keldi')
+    res_edu_type_code = res_edu_type['code']
+    res_degree_code = res_degree['code']
+    ic(res_edu_type_code, res_degree_code, 229)
     # Get data based on university and educational type
     contract_data = university.return_by_university_and_edu_type(
-        res_edu_type['code'],
-        res_degree['code'],
+        res_edu_type_code,
+        res_degree_code,
         direction_code,
         edu_type_name,
         degree_name)
-    
+    ic(contract_data, 'contract_data')
     # Get language-related data
     languages_data = university.return_languages_by_edu_type(
         res_edu_type['code'], 
         res_degree['code'], 
-        11)  # Assuming '11' is a fixed parameter
+        11)  
+    res_edu_type_code = res_edu_type['code']
+    languages_data_code = languages_data['code']
+    res_degree_code = res_degree['code']
+    ic(res_edu_type_code, languages_data_code, res_degree_code, 246)
     edu_type_language_data = university.return_by_edu_type_and_language_and_type(
-        res_edu_type['code'], 
-        languages_data['code'],
+        res_edu_type_code, 
+        languages_data_code,
         11,
-        res_degree['code']
+        res_degree_code
     )
 
     # Constructing the result object
@@ -254,7 +260,7 @@ def return_contract_id_directions(edu_type_name, degree_name, direction_code):
         "contractTemplateId": edu_type_language_data
     }
     ic(result)
-    time.sleep(100)
+    # time.sleep(100)
     return result
     # except Exception as err:
     #     ic(err)  # Consider using proper logging instead of `ic` depending on the environment

@@ -14,9 +14,11 @@ def userInfo(pinfl,serialNumber,birthDate ):
         "serialAndNumber": str(serialNumber),
         "birthDate": str(birthDate)
     }
+
+    ic(body)
     response = requests.post(url, json=body, headers=headers)
     if response.status_code == 200:
-        ic(response.json())
+        # ic(response.json())
         data = response.json()
         # ic(data['givenDate'])
         
